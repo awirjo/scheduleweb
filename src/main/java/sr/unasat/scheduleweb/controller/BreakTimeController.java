@@ -1,8 +1,5 @@
 package sr.unasat.scheduleweb.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import sr.unasat.scheduleweb.entities.BreakTime;
 import sr.unasat.scheduleweb.service.BreakTimeService;
 
