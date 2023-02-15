@@ -10,20 +10,20 @@ import java.util.List;
 public class ReportsService {
 
     BreakTimeDAO breakTimeDAO = new BreakTimeDAO();
-    public boolean breakTimeRapportByQuarter(){
-        List<BreakTime> breakTimeSelectRapport = breakTimeDAO.findServingDateByQuarter(LocalDate.parse("2021-02-02", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        System.out.println(breakTimeSelectRapport);
-        return true;
+    public List<BreakTime> breakTimeRapportByQuarter(){
+        List<BreakTime> breakTimeQuarterRapport = breakTimeDAO.findServingDateByQuarter(LocalDate.parse("2021-02-02", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        System.out.println(breakTimeQuarterRapport);
+        return breakTimeQuarterRapport;
     }
-    public boolean breakTimeRapportHalfYear(){
-        List<BreakTime> breakTimeSelectRapport = breakTimeDAO.findServingDateByHalfYear(LocalDate.parse("2021-02-02", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        System.out.println(breakTimeSelectRapport);
-        return true;
+    public List<BreakTime> breakTimeRapportHalfYear(){
+        List<BreakTime> breakTimeHalfYearRapport = breakTimeDAO.findServingDateByHalfYear(LocalDate.parse("2021-02-02", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        System.out.println(breakTimeHalfYearRapport);
+        return breakTimeHalfYearRapport;
     }
-    public boolean breakTimeRapportByYear(){
-        List<BreakTime> breakTimeSelectRapport = breakTimeDAO.findDateByYear(LocalDate.parse("2021-01-01", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        System.out.println(breakTimeSelectRapport);
-        return true;
+    public List<BreakTime> breakTimeRapportByYear(){
+        List<BreakTime> breakTimeYearRapport = breakTimeDAO.findDateByYear(LocalDate.parse("2021-01-01", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        System.out.println(breakTimeYearRapport);
+        return breakTimeYearRapport;
     }
 
 }
