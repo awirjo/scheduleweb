@@ -20,9 +20,6 @@ public class BreakTimeController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<BreakTime> findBreak(){
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         System.out.println(breakTimeService.findAllBreakTime());
         return breakTimeService.findAllBreakTime();
     }
