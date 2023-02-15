@@ -1,6 +1,5 @@
 package sr.unasat.scheduleweb;
 
-import org.glassfish.jersey.jackson.JacksonFeature;
 import sr.unasat.scheduleweb.controller.BreakTimeController;
 import sr.unasat.scheduleweb.controller.CustomJsonProvider;
 
@@ -16,11 +15,9 @@ public class MyApplication extends Application {
         // Add your resource classes here
         classes.add(BreakTimeController.class);
 
-        // Add the CustomJsonProvider to serialize/deserialize Java 8 Date/Time API objects
+        // Register the CustomJsonProvider
         classes.add(CustomJsonProvider.class);
 
         return classes;
     }
 }
-
-
