@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+
+<body>
+
+<div class="w3-container w3-half w3-margin-top">
+
+  <p>
+    <input id="menuId" class="w3-input" type="hidden" style="width:90%">
+  </p>
+
+  <p>
+    <input id="breakfast" class="w3-input" type="text" style="width:90%" required>
+    <label>Breakfast</label></p>
+  <p>
+    <input id="lunch" class="w3-input" type="text" style="width:90%" required>
+    <label>Lunch</label></p>
+  <p>
+    <input id="dinner" class="w3-input" type="text" style="width:90%" required>
+    <label>Dinner</label></p>
+  <p>
+    <input id="special_meals" class="w3-input" type="text" style="width:90%" required>
+    <label>Specials</label></p>
+  <p>
+    <input id="description" class="w3-input" type="text" style="width:90%" required>
+    <label>Description</label></p>
+  <p>
+    <button id="btnSaveMenu" onclick="addMenu()" class="w3-button w3-section w3-teal w3-ripple"> Add Menu </button></p>
+
+</div>
+
+<div id="menuData" class="w3-container">
+
+</div>
+
+<script src="./menu.js"></script>
+</body>
+</html>
