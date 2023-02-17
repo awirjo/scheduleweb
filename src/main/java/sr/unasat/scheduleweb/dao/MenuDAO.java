@@ -1,6 +1,7 @@
 package sr.unasat.scheduleweb.dao;
 
 import sr.unasat.scheduleweb.configuration.JPAConfig;
+import sr.unasat.scheduleweb.entities.Employees;
 import sr.unasat.scheduleweb.entities.Menu;
 
 import javax.persistence.EntityManager;
@@ -109,4 +110,12 @@ public class MenuDAO {
         entityManager.getTransaction().commit();
         return rowsDeleted;
     }
+    public Menu find(int id) {
+        entityManager.getTransaction().begin();
+        Menu menu = entityManager.find(Menu.class, id);
+        entityManager.getTransaction().commit();
+        return menu;
+    }
+
+
 }

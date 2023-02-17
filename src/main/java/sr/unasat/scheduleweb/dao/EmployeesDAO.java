@@ -71,4 +71,11 @@ public class EmployeesDAO {
         entityManager.getTransaction().commit();
         return employees;
     }
+
+    public Employees find(int id) {
+        entityManager.getTransaction().begin();
+        Employees employees = entityManager.find(Employees.class, id);
+        entityManager.getTransaction().commit();
+        return employees;
+    }
 }

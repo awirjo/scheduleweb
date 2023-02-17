@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import sr.unasat.scheduleweb.configuration.JPAConfig;
 import sr.unasat.scheduleweb.entities.BreakTime;
 import sr.unasat.scheduleweb.entities.Department;
+import sr.unasat.scheduleweb.entities.Employees;
+import sr.unasat.scheduleweb.entities.Menu;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -14,6 +16,8 @@ import java.util.List;
 
 public class BreakTimeDAO {
     private EntityManager entityManager = JPAConfig.getEntityManager();
+    private MenuDAO menuDAO = new MenuDAO();
+    private EmployeesDAO employeesDAO = new EmployeesDAO();
 
 
 //    public BreakTimeDAO(EntityManager entityManager) {
@@ -115,5 +119,15 @@ public class BreakTimeDAO {
         entityManager.getTransaction().commit();
         return breakTimeList;
     }
+
+    public BreakTime findBreakTimeById(int breakTimeId) {
+        entityManager.getTransaction().begin();
+        String jpql = "select b from BreakTime b  where b.id = :id";
+        TypedQuery<BreakTime> query = entityManager.createQuery(jpql, BreakTime.class);
+        BreakTime breakTime = query.setParameter("id", breakTimeId).getSingleResult();
+        entityManager.getTransaction().commit();
+        return breakTime;
+    }
+
 
 }
