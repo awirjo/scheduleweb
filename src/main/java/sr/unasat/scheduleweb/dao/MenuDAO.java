@@ -9,8 +9,10 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+import static sr.unasat.scheduleweb.configuration.JPAConfig.getEntityManager;
+
 public class MenuDAO {
-    private EntityManager entityManager = JPAConfig.getEntityManager();
+    private EntityManager entityManager = getEntityManager();
 
 //    public MenuDAO(EntityManager entityManager) {
 //        this.entityManager = entityManager;
@@ -126,6 +128,12 @@ public class MenuDAO {
         entityManager.getTransaction().commit();
         return menu;
     }
+
+    public Menu getMenuById(int id) {
+        EntityManager entityManager = getEntityManager();
+        return entityManager.find(Menu.class, id);
+    }
+
 
 
 }

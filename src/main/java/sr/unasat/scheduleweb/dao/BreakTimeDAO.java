@@ -130,4 +130,10 @@ public class BreakTimeDAO {
     }
 
 
+    public BreakTime createBreakTime(BreakTime breakTime) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(breakTime);
+        entityManager.getTransaction().commit();
+        return breakTime;
+    }
 }

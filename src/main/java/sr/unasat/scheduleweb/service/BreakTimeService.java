@@ -14,8 +14,10 @@ public class BreakTimeService {
         return breakTimeDAO.retrieveBreakTimeList();
     }
 
-    public void insertBreakTime(BreakTime breakTimeObj){ //post
-        breakTimeDAO.insertBreakTime(breakTimeObj);
+    public BreakTime createBreakTime(BreakTime breakTime) {
+        // Call the DAO method to persist the object to the database
+        breakTimeDAO.createBreakTime(breakTime);
+        return breakTime;
     }
     public BreakTime updateBreakTime(int breakTimeUpdate){ //put
         return breakTimeDAO.findBreakTimeById(breakTimeUpdate);

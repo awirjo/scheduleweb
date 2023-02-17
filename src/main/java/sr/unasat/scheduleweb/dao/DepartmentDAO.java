@@ -6,10 +6,17 @@ import sr.unasat.scheduleweb.entities.Department;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static sr.unasat.scheduleweb.configuration.JPAConfig.getEntityManager;
 
 public class DepartmentDAO {
-    private EntityManager entityManager = JPAConfig.getEntityManager();
+    private EntityManager entityManager = getEntityManager();
 
 //    public DepartmentDAO(EntityManager entityManager) {
 //        this.entityManager = entityManager;
@@ -88,5 +95,17 @@ public class DepartmentDAO {
         entityManager.getTransaction().commit();
         return departmentList;
     }
+
+    public Department findDepartment(String name, String regular_break) {
+        entityManager.getTransaction().begin();
+        String jpql = "select d from Department d  where d.name = :name and d.regular_break = :regular_break";
+        TypedQuery<Department> query = entityManager.createQuery(jpql, Department.class);
+        query.setParameter("name", name);
+        query.setParameter("regular_break", regular_break);
+        Department department = query.getSingleResult();
+        entityManager.getTransaction().commit();
+        return department;
+    }
+
 
 }
