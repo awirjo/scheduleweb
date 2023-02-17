@@ -7,17 +7,16 @@ function addBreakTime() {
     };
 
     $.ajax({
+        url: "http://localhost:8081/scheduleweb_war_exploded/api/breakTime/addBreak",
         type: "POST",
-        contentType: "application/json",
-        url: "/scheduleweb/api/breakTime/addBreak",
         data: JSON.stringify(formData),
-        dataType: 'json',
-        success: function (data) {
-            alert("Breaktime successfully added.");
-            window.location.href = "/scheduleweb/breaktime.html";
+        contentType: "application/json",
+        success: function(data) {
+            alert("Breaktime added successfully");
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("Error adding breaktime: " + jqXHR.responseText);
+        error: function(xhr, status, error) {
+            alert("Error adding breaktime: " + error);
         }
     });
+
 }
