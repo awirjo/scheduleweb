@@ -1,25 +1,23 @@
 function addBreakTime() {
-    // Get form data
-    const form = document.getElementById('add-break-form');
-    const formData = new FormData(form);
-
-    // Convert form data to JSON object
-    const json = {};
-    formData.forEach((value, key) => {
-        json[key] = value;
-    });
-
-    // Send AJAX request
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:8081/scheduleweb_war_exploded/api/breakTime/addBreak');
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            alert('BreakTime added successfully!');
-            form.reset();
-        } else {
-            alert('Error adding BreakTime.');
-        }
+    var formData = {
+        serving_time: $('#serving_time').val(),
+        serving_date: $('#serving_date').val(),
+        menu: {id: $('#menu_id').val()},
+        department: [{id: $('#department_id').val()}]
     };
-    xhr.send(JSON.stringify(json));
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/scheduleweb/api/breakTime/addBreak",
+        data: JSON.stringify(formData),
+        dataType: 'json',
+        success: function (data) {
+            alert("Breaktime successfully added.");
+            window.location.href = "/scheduleweb/breaktime.html";
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("Error adding breaktime: " + jqXHR.responseText);
+        }
+    });
 }
