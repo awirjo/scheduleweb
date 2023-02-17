@@ -61,7 +61,14 @@ public class Department {
         this.employees = employees;
     }
 
-//    public Set<BreakTime> getBreakTime() {
+    public Set<BreakTime> getBreakTime() {
+        return breakTime;
+    }
+
+    public void setBreakTime(Set<BreakTime> breakTime) {
+        this.breakTime = breakTime;
+    }
+    //    public Set<BreakTime> getBreakTime() {
 //        return breakTime;
 //    }
 //

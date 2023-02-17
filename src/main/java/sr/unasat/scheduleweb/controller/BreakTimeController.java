@@ -32,11 +32,16 @@ public class BreakTimeController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void addBreakTime(BreakTime breakTime) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("persistenceUnit");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PERSISTENCE");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        Menu menu = entityManager.find(Menu.class, breakTime.getMenu().getId());
+//        Menu menu = entityManager.find(Menu.class, breakTime.getMenu().getId());
+        Menu menu = null;
+        if (breakTime.getMenu() != null) {
+            menu = entityManager.find(Menu.class, breakTime.getMenu().getId());
+        }
+
         breakTime.setMenu(menu);
         Set<Department> departments = new HashSet<>();
         for (Department department : breakTime.getDepartment()) {

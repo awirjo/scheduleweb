@@ -79,5 +79,14 @@ public class DepartmentDAO {
             return false;
         }
     }
+    public List<Department> getDepartmentInfo(String idNumber) {
+        entityManager.getTransaction().begin();
+        String jpql = "select d from Department d where d.employees = :idNumber";
+        TypedQuery<Department> query = entityManager.createQuery(jpql, Department.class);
+        query.setParameter("idNumber", idNumber);
+        List<Department> departmentList = query.getResultList();
+        entityManager.getTransaction().commit();
+        return departmentList;
+    }
 
 }

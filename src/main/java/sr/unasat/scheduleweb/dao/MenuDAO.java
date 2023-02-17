@@ -116,6 +116,16 @@ public class MenuDAO {
         entityManager.getTransaction().commit();
         return menu;
     }
+    public Menu findMenuByDescriptionAndSpecial(String description, String special_meals) {
+        entityManager.getTransaction().begin();
+        String jpql = "select m from Menu m  where m.description = :description and m.special_meals = :special_meals";
+        TypedQuery<Menu> query = entityManager.createQuery(jpql, Menu.class);
+        query.setParameter("description", description);
+        query.setParameter("special_meals", special_meals);
+        Menu menu = query.getSingleResult();
+        entityManager.getTransaction().commit();
+        return menu;
+    }
 
 
 }

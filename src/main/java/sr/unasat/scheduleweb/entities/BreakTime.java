@@ -36,9 +36,6 @@ public class BreakTime {
             inverseJoinColumns = {@JoinColumn(name = "department_id")})
     private Set<Department> department;
 
-
-
-    // add department set.
     public int getId() {
         return id;
     }

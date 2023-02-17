@@ -27,6 +27,7 @@ function saveBreakTime() {
             console.log("ERROR : ", e);
         },
     });
+    console.log(data);
 }
 
 function submitBreaktimeForm() {
@@ -52,4 +53,5 @@ var form = document.getElementById("breaktime-form");
 form.addEventListener("submit", function (event) {
     event.preventDefault();
     submitBreaktimeForm();
+    console.log(data);
 });
