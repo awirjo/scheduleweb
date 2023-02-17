@@ -1,22 +1,22 @@
 function addBreakTime() {
-    var formData = {
-        serving_time: $('#serving_time').val(),
-        serving_date: $('#serving_date').val(),
-        menu: {id: $('#menu_id').val()},
-        department: [{id: $('#department_id').val()}]
-    };
-
-    $.ajax({
-        url: "http://localhost:8081/scheduleweb_war_exploded/api/breakTime/addBreak",
-        type: "POST",
-        data: JSON.stringify(formData),
-        contentType: "application/json",
-        success: function(data) {
-            alert("Breaktime added successfully");
-        },
-        error: function(xhr, status, error) {
-            alert("Error adding breaktime: " + error);
-        }
+    document.getElementById("breaktime-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("BreakTime added successfully!");
+            }
+        };
+        xhttp.open("POST", "http://localhost:8081/scheduleweb_war_exploded/api/breakTime/addBreak", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        var breakTime = {
+            "serving_time": document.getElementById("serving_time").value,
+            "serving_date": document.getElementById("serving_date").value,
+            "menu": {"id": document.getElementById("menu").value},
+            "department": [{"id": document.getElementById("department").value}]
+        };
+        xhttp.send(JSON.stringify(breakTime));
     });
+
 
 }
