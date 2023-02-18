@@ -4,6 +4,7 @@ import sr.unasat.scheduleweb.configuration.JPAConfig;
 import sr.unasat.scheduleweb.entities.Department;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -30,7 +31,7 @@ public class DepartmentDAO {
         return departmentList;
     }
 
-    public Department findByDepartment(String name) {
+    public Department findByDepartmentInfo(String name) {
         entityManager.getTransaction().begin();
         String jpql = "select d from Department d  where d.name = :name";
         TypedQuery<Department> query = entityManager.createQuery(jpql, Department.class);
@@ -96,16 +97,24 @@ public class DepartmentDAO {
         return departmentList;
     }
 
-    public Department findDepartment(String name, String regular_break) {
-        entityManager.getTransaction().begin();
-        String jpql = "select d from Department d  where d.name = :name and d.regular_break = :regular_break";
-        TypedQuery<Department> query = entityManager.createQuery(jpql, Department.class);
-        query.setParameter("name", name);
-        query.setParameter("regular_break", regular_break);
-        Department department = query.getSingleResult();
-        entityManager.getTransaction().commit();
-        return department;
+    public Department findByDepartment(String name) {
+        try {
+            entityManager.getTransaction().begin();
+            String jpql = "select d from Department d where d.name = :name";
+            TypedQuery<Department> query = entityManager.createQuery(jpql, Department.class);
+            Department department = query.setParameter("name", name).getSingleResult();
+            entityManager.getTransaction().commit();
+            return department;
+        } catch (NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw e;
+        } finally {
+            entityManager.close();
+        }
     }
+
 
 
 }

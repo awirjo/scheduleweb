@@ -13,12 +13,12 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class BreakTimeDAO {
     private EntityManager entityManager = JPAConfig.getEntityManager();
+    private EntityTransaction transaction = entityManager.getTransaction();
     private MenuDAO menuDAO = new MenuDAO();
     private EmployeesDAO employeesDAO = new EmployeesDAO();
     private DepartmentDAO departmentDAO = new DepartmentDAO();
@@ -133,29 +133,30 @@ public class BreakTimeDAO {
         return breakTime;
     }
 
-    public void addBreakTime(BreakTime breakTime, int menuId, List<Integer> departmentIds) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-
+    public void addBreakTime(BreakTime breakTime, int menuId, List<Long> departmentIds) {
         try {
             transaction.begin();
 
-            // First, add the BreakTime object itself
-            entityManager.persist(breakTime);
+            if (breakTime != null) {
+                // First, add the BreakTime object itself
+                entityManager.persist(breakTime);
 
-            // Then, retrieve the Menu object based on its ID and set it in the BreakTime object
-            Menu menu = entityManager.find(Menu.class, menuId);
-            breakTime.setMenu(menu);
+                // Then, retrieve the Menu object based on its ID and set it in the BreakTime object
+                Menu menu = entityManager.find(Menu.class, menuId);
+                breakTime.setMenu(menu);
 
-            // Finally, retrieve the Department objects based on their IDs and add them to the BreakTime object
-            List<Department> departments = new ArrayList<>();
-            for (int id : departmentIds) {
-                Department department = entityManager.find(Department.class, id);
-                departments.add(department);
+                // Finally, retrieve the Department objects based on their IDs and add them to the BreakTime object
+                List<Department> departments = new ArrayList<>();
+                for (Long id : departmentIds) {
+                    Department department = entityManager.find(Department.class, id);
+                    departments.add(department);
+                }
+                breakTime.setDepartment(new HashSet<>(departments));
+
+                transaction.commit();
+            } else {
+                throw new IllegalArgumentException("BreakTime object cannot be null.");
             }
-            breakTime.setDepartment(new HashSet<>(departments));
-
-            transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
             e.printStackTrace();
@@ -163,5 +164,41 @@ public class BreakTimeDAO {
             entityManager.close();
         }
     }
+
+
+
+
+    public BreakTime insertOneRecord(BreakTime breakTime) {
+        Set<Department> departments = new HashSet<>();
+        for (Department department : breakTime.getDepartment()) {
+            Department d = departmentDAO.findByDepartment(department.getName());
+            if (d == null) {
+                throw new IllegalArgumentException("Department not found");
+            }
+            departments.add(d);
+        }
+        Menu menu = menuDAO.findMenuByDescription(breakTime.getMenu().getDescription());
+        if (menu == null) {
+            throw new IllegalArgumentException("Menu not found");
+        }
+        entityManager.getTransaction().begin();
+        try {
+            breakTime.setDepartment(departments);
+            breakTime.setMenu(menu);
+            entityManager.persist(breakTime);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw new RuntimeException("Error inserting record", e);
+        } finally {
+            entityManager.close();
+        }
+        return breakTime;
+    }
+
+
+
+
+
 
 }

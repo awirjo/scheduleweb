@@ -4,9 +4,7 @@ import sr.unasat.scheduleweb.configuration.JPAConfig;
 import sr.unasat.scheduleweb.entities.Employees;
 import sr.unasat.scheduleweb.entities.Menu;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 import static sr.unasat.scheduleweb.configuration.JPAConfig.getEntityManager;
@@ -118,16 +116,27 @@ public class MenuDAO {
         entityManager.getTransaction().commit();
         return menu;
     }
-    public Menu findMenuByDescriptionAndSpecial(String description, String special_meals) {
-        entityManager.getTransaction().begin();
-        String jpql = "select m from Menu m  where m.description = :description and m.special_meals = :special_meals";
-        TypedQuery<Menu> query = entityManager.createQuery(jpql, Menu.class);
-        query.setParameter("description", description);
-        query.setParameter("special_meals", special_meals);
-        Menu menu = query.getSingleResult();
-        entityManager.getTransaction().commit();
-        return menu;
+    public Menu findMenuByDescription(String description) throws PersistenceException {
+        try {
+            entityManager.getTransaction().begin();
+            String jpql = "select m from Menu m where m.description = :description";
+            TypedQuery<Menu> query = entityManager.createQuery(jpql, Menu.class);
+            query.setParameter("description", description);
+            Menu menu = query.getSingleResult();
+            entityManager.getTransaction().commit();
+            return menu;
+        } catch (NoResultException e) {
+            entityManager.getTransaction().rollback();
+            throw new PersistenceException("No menu found with description: " + description);
+        } catch (NonUniqueResultException e) {
+            entityManager.getTransaction().rollback();
+            throw new PersistenceException("Multiple menus found with description: " + description);
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw new PersistenceException("Error finding menu by description: " + description, e);
+        }
     }
+
 
     public List<Menu> getMenuInfo() {
         entityManager.getTransaction().begin();

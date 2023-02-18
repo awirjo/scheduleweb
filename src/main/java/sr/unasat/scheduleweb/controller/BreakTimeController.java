@@ -1,5 +1,6 @@
 package sr.unasat.scheduleweb.controller;
 
+import sr.unasat.scheduleweb.configuration.JPAConfig;
 import sr.unasat.scheduleweb.dao.BreakTimeDAO;
 import sr.unasat.scheduleweb.dao.DepartmentDAO;
 import sr.unasat.scheduleweb.dao.MenuDAO;
@@ -12,9 +13,7 @@ import javax.persistence.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Path("breakTime")
@@ -22,9 +21,11 @@ import java.util.stream.Collectors;
 public class BreakTimeController {
 
     private BreakTimeService breakTimeService = new BreakTimeService();
+    private BreakTimeDAO breakTimeDAO = new BreakTimeDAO();
+    private EntityManager entityManager = JPAConfig.getEntityManager();
 
     @PersistenceContext(unitName = "PERSISTENCE")
-    private EntityManager entityManager;
+
     @Path("breakList")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,29 +39,30 @@ public class BreakTimeController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 
-    public BreakTime createBreakTime(BreakTime breakTime) {
-        System.out.println("breakTime: " + breakTime);
-        System.out.println("entityManager: " + entityManager);
-
+    public BreakTime createBreakTime(BreakTime breakTime, int menuId, List<Long> departmentIds) {
         try {
-            Menu menu = entityManager.find(Menu.class, breakTime.getMenu().getId());
-            // rest of the code
+            Menu menu = entityManager.find(Menu.class, menuId);
+
             Set<Department> departments = new HashSet<>();
-            for (Department department : breakTime.getDepartment()) {
-                Department dbDepartment = entityManager.find(Department.class, department.getId());
-                departments.add(dbDepartment);
+            for (Long id : departmentIds) {
+                Department department = entityManager.find(Department.class, id);
+                departments.add(department);
             }
+
             breakTime.setMenu(menu);
             breakTime.setDepartment(departments);
-            entityManager.persist(breakTime);
+            breakTimeDAO.addBreakTime(breakTime, menuId, departmentIds);
+
             return breakTime;
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Error adding BreakTime data: " + e.getMessage());
         }
-
-
-        return breakTime;
     }
+
+
+
+
 
 
 
