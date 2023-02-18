@@ -9,15 +9,19 @@ import sr.unasat.scheduleweb.entities.Employees;
 import sr.unasat.scheduleweb.entities.Menu;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class BreakTimeDAO {
     private EntityManager entityManager = JPAConfig.getEntityManager();
     private MenuDAO menuDAO = new MenuDAO();
     private EmployeesDAO employeesDAO = new EmployeesDAO();
+    private DepartmentDAO departmentDAO = new DepartmentDAO();
 
 
 //    public BreakTimeDAO(EntityManager entityManager) {
@@ -129,11 +133,35 @@ public class BreakTimeDAO {
         return breakTime;
     }
 
+    public void addBreakTime(BreakTime breakTime, int menuId, List<Integer> departmentIds) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
 
-    public BreakTime createBreakTime(BreakTime breakTime) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(breakTime);
-        entityManager.getTransaction().commit();
-        return breakTime;
+        try {
+            transaction.begin();
+
+            // First, add the BreakTime object itself
+            entityManager.persist(breakTime);
+
+            // Then, retrieve the Menu object based on its ID and set it in the BreakTime object
+            Menu menu = entityManager.find(Menu.class, menuId);
+            breakTime.setMenu(menu);
+
+            // Finally, retrieve the Department objects based on their IDs and add them to the BreakTime object
+            List<Department> departments = new ArrayList<>();
+            for (int id : departmentIds) {
+                Department department = entityManager.find(Department.class, id);
+                departments.add(department);
+            }
+            breakTime.setDepartment(new HashSet<>(departments));
+
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
     }
+
 }

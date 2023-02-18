@@ -4,6 +4,7 @@ import sr.unasat.scheduleweb.dao.BreakTimeDAO;
 import sr.unasat.scheduleweb.entities.BreakTime;
 import sr.unasat.scheduleweb.entities.Menu;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public class BreakTimeService {
@@ -14,11 +15,27 @@ public class BreakTimeService {
         return breakTimeDAO.retrieveBreakTimeList();
     }
 
-    public BreakTime createBreakTime(BreakTime breakTime) {
-        // Call the DAO method to persist the object to the database
-        breakTimeDAO.createBreakTime(breakTime);
-        return breakTime;
-    }
+//    public BreakTime getBreakTimeById(long id) {
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//        try {
+//            BreakTime breakTime = entityManager.find(BreakTime.class, id);
+//            if (breakTime == null) {
+//                return null; // or throw an exception, depending on your requirements
+//            }
+//
+//            // Load the associated Menu object for the BreakTime
+//            Menu menu = breakTime.getMenu();
+//            if (menu != null) {
+//                menu = entityManager.find(Menu.class, menu.getId());
+//                breakTime.setMenu(menu);
+//            }
+//
+//            return breakTime;
+//        } finally {
+//            entityManager.close();
+//        }
+//    }
+
     public BreakTime updateBreakTime(int breakTimeUpdate){ //put
         return breakTimeDAO.findBreakTimeById(breakTimeUpdate);
     }

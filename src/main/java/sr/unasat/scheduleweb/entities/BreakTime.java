@@ -27,10 +27,10 @@ public class BreakTime {
     @Column
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     private LocalDate serving_date;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
     private Menu menu;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "breakTime_department"
             , joinColumns = {@JoinColumn(name = "breakTime_id")},
             inverseJoinColumns = {@JoinColumn(name = "department_id")})

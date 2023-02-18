@@ -22,10 +22,6 @@ import java.util.stream.Collectors;
 public class BreakTimeController {
 
     private BreakTimeService breakTimeService = new BreakTimeService();
-    private MenuDAO menuDAO = new MenuDAO();
-    private DepartmentDAO departmentDAO = new DepartmentDAO();
-
-    private BreakTimeDAO breakTimeDAO = new BreakTimeDAO();
 
     @PersistenceContext(unitName = "PERSISTENCE")
     private EntityManager entityManager;
@@ -43,34 +39,29 @@ public class BreakTimeController {
     @Produces(MediaType.APPLICATION_JSON)
 
     public BreakTime createBreakTime(BreakTime breakTime) {
-        Menu menu = entityManager.find(Menu.class, breakTime.getMenu().getId());
-        Set<Department> departments = new HashSet<>();
-        for (Department department : breakTime.getDepartment()) {
-            departments.add(entityManager.find(Department.class, department.getId()));
+        System.out.println("breakTime: " + breakTime);
+        System.out.println("entityManager: " + entityManager);
+
+        try {
+            Menu menu = entityManager.find(Menu.class, breakTime.getMenu().getId());
+            // rest of the code
+            Set<Department> departments = new HashSet<>();
+            for (Department department : breakTime.getDepartment()) {
+                Department dbDepartment = entityManager.find(Department.class, department.getId());
+                departments.add(dbDepartment);
+            }
+            breakTime.setMenu(menu);
+            breakTime.setDepartment(departments);
+            entityManager.persist(breakTime);
+            return breakTime;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        breakTime.setMenu(menu);
-        breakTime.setDepartment(departments);
-        entityManager.getTransaction().begin();
-        entityManager.persist(breakTime);
-        entityManager.getTransaction().commit();
+
+
         return breakTime;
     }
 
-    @Path("/removeBreak")
-    @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public void remove(String breakTime){
-        breakTimeService.deleteBreakTime(breakTime);
-    }
-
-    @Path("/getBreak")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public BreakTime getBreakTime(int breakTimeId){
-        return breakTimeService.updateBreakTime(breakTimeId);
-    }
 
 
 }

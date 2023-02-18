@@ -129,9 +129,13 @@ public class MenuDAO {
         return menu;
     }
 
-    public Menu getMenuById(int id) {
-        EntityManager entityManager = getEntityManager();
-        return entityManager.find(Menu.class, id);
+    public List<Menu> getMenuInfo() {
+        entityManager.getTransaction().begin();
+        String jpql = "select m from Menu m";
+        TypedQuery<Menu> query = entityManager.createQuery(jpql, Menu.class);
+        List<Menu> menuList = query.getResultList();
+        entityManager.getTransaction().commit();
+        return menuList;
     }
 
 
