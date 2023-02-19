@@ -45,10 +45,10 @@
     <input type="date" id="serving-date" name="serving_date">
 
     <label for="menu">Menu:</label>
-    <input type="number" id="menu" name="menu_id">
+    <input type="number" id="menu" name="menu[id]">
 
     <label for="department-ids">Departments:</label>
-    <select multiple id="department-ids" name="department_ids[]">
+    <select multiple id="department-ids" name="department[ids][]">
         <option value="1">Department 1</option>
         <option value="2">Department 2</option>
         <option value="3">Department 3</option>
@@ -56,6 +56,7 @@
 
     <button type="submit">Add BreakTime</button>
 </form>
+
 
 
 <div>

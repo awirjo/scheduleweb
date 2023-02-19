@@ -68,13 +68,6 @@ public class Department {
     public void setBreakTime(Set<BreakTime> breakTime) {
         this.breakTime = breakTime;
     }
-    //    public Set<BreakTime> getBreakTime() {
-//        return breakTime;
-//    }
-//
-//    public void setBreakTime(Set<BreakTime> breakTime) {
-//        this.breakTime = breakTime;
-//    }
 
 
     @Override

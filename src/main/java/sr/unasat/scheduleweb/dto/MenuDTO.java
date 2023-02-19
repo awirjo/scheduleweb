@@ -1,4 +1,4 @@
-package sr.unasat.scheduleweb.entities;
+package sr.unasat.scheduleweb.dto;
 
 public class MenuDTO {
 

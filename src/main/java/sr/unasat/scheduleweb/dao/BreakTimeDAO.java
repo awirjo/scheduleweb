@@ -8,10 +8,7 @@ import sr.unasat.scheduleweb.entities.Department;
 import sr.unasat.scheduleweb.entities.Employees;
 import sr.unasat.scheduleweb.entities.Menu;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,6 +16,9 @@ import java.util.stream.Collectors;
 public class BreakTimeDAO {
     private EntityManager entityManager = JPAConfig.getEntityManager();
     private EntityTransaction transaction = entityManager.getTransaction();
+
+    @PersistenceContext(unitName = "PERSISTENCE")
+    private EntityManager entityManagerPersistence;
     private MenuDAO menuDAO = new MenuDAO();
     private EmployeesDAO employeesDAO = new EmployeesDAO();
     private DepartmentDAO departmentDAO = new DepartmentDAO();
@@ -138,17 +138,17 @@ public class BreakTimeDAO {
             transaction.begin();
 
             if (breakTime != null) {
-                // First, add the BreakTime object itself
-                entityManager.persist(breakTime);
+                // Add the BreakTime object itself
+                entityManagerPersistence.persist(breakTime);
 
-                // Then, retrieve the Menu object based on its ID and set it in the BreakTime object
-                Menu menu = entityManager.find(Menu.class, menuId);
+                // Then, retrieve the Menu object  ID and set it in the BreakTime object
+                Menu menu = entityManagerPersistence.find(Menu.class, menuId);
                 breakTime.setMenu(menu);
 
-                // Finally, retrieve the Department objects based on their IDs and add them to the BreakTime object
+                // Retrieve the Department objects IDs and add to the BreakTime object
                 List<Department> departments = new ArrayList<>();
                 for (Long id : departmentIds) {
-                    Department department = entityManager.find(Department.class, id);
+                    Department department = entityManagerPersistence.find(Department.class, id);
                     departments.add(department);
                 }
                 breakTime.setDepartment(new HashSet<>(departments));
@@ -161,7 +161,7 @@ public class BreakTimeDAO {
             transaction.rollback();
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            entityManagerPersistence.close();
         }
     }
 
