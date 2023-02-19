@@ -114,6 +114,15 @@ public class BreakTimeDAO {
         entityManager.getTransaction().commit();
         return rowsDeleted;
     }
+    public int deleteBreakTime(int id) {
+        entityManager.getTransaction().begin();
+        Query query = entityManager.createQuery("delete from BreakTime b where b.id = :id");
+        query.setParameter("id", id);
+        int rowsDeleted = query.executeUpdate();
+        System.out.println("entities deleted: " + rowsDeleted);
+        entityManager.getTransaction().commit();
+        return rowsDeleted;
+    }
 
     public List<BreakTime> findBreakTimeByDepartment(Department departmentFind) {
         entityManager.getTransaction().begin();

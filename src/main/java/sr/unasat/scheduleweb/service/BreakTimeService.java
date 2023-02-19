@@ -52,7 +52,7 @@ public class BreakTimeService {
         return breakTimeDAO.findBreakTimeById(breakTimeUpdate);
     }
 
-    public void deleteBreakTime(String breakTimeDelete){ //delete
-        breakTimeDAO.deleteBreakTimeMeal(breakTimeDelete);
+    public void deleteBreakTime(int breakTimeDelete){ //delete
+        breakTimeDAO.deleteBreakTime(breakTimeDelete);
     }
 }

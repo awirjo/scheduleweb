@@ -39,7 +39,7 @@ public class BreakTimeController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 
-    public void deleteBreakTime(String breakTime) {
+    public void deleteBreakTime(int breakTime) {
         breakTimeService.deleteBreakTime(breakTime);
     }
 
