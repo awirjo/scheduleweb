@@ -53,7 +53,7 @@ function addMenu(){
     xmlhttp.send(JSON.stringify(menu));
 }
 
-function updateBook()
+function updateMenu()
 {
     let menu = {
         "id" : document.getElementById("menuId").value,
@@ -126,7 +126,7 @@ function saveMenu()
         }
         else
         {
-            updateBook();
+            updateMenu()
         }
     }
 }
