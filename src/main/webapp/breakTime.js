@@ -93,5 +93,5 @@ function deleteBreaktime(id) {
     };
     xhr.send(JSON.stringify(id));
 }
-`1`
+
 

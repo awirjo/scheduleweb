@@ -106,6 +106,16 @@ function getMenu(menuId)
     xhttp.send(JSON.stringify(menuId));
 
 }
+function clearInputFields()
+{
+    document.getElementById("menuId").value = "";
+    document.getElementById("breakfast").value = "";
+    document.getElementById("lunch").value = "";
+    document.getElementById("dinner").value = "";
+    document.getElementById("special_meals").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("btnSaveBook").innerHTML = "Add Book";
+}
 function editMenu(menuId){
     getMenu(menuId)
 }
@@ -120,13 +130,14 @@ function saveMenu()
 {
     if(validateForm())
     {
-        if(document.getElementById("btnSaveMenu").innerHTML === 'Add Menu')
+        const menuId = document.getElementById("menuId").value;
+        if(menuId)
         {
-            addMenu();
+            updateMenu()
         }
         else
         {
-            updateMenu()
+            addMenu()
         }
     }
 }
