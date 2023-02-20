@@ -1,7 +1,5 @@
 package sr.unasat.scheduleweb.dao;
 
-import sr.unasat.scheduleweb.configuration.JPAConfig;
-import sr.unasat.scheduleweb.entities.Employees;
 import sr.unasat.scheduleweb.entities.Menu;
 
 import javax.persistence.*;

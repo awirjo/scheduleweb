@@ -12,7 +12,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@JsonIgnoreProperties("breakTime")
+@JsonIgnoreProperties({"breakTime","hibernateLazyInitializer", "handler"})
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -37,11 +37,16 @@
     </div>
   </div>
 </nav>
-<div>
-  <button type="button" onclick="loadQuarterReport()">Get Quarter report</button>
-  <button type="button" onclick="loadHalfYearReport()">Get Half-year report</button>
-  <button type="button" onclick="loadYearReport()">Get Year report</button>
-</div>
+
+<button id="quarter-btn">Get Quarter Report</button>
+<button id="halfYear-btn">Get Half Year Report</button>
+<button id="year-btn">Get Year Report</button>
+
+<div id="report-data"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="./reports.js"></script>
+
+
 </body>
 </html>

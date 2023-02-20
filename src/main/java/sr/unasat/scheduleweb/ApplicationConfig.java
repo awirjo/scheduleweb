@@ -1,7 +1,5 @@
 package sr.unasat.scheduleweb;
 
-import org.glassfish.jersey.server.ResourceConfig;
-
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashMap;

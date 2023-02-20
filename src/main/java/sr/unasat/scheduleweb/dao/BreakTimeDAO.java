@@ -1,17 +1,12 @@
 package sr.unasat.scheduleweb.dao;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import sr.unasat.scheduleweb.configuration.JPAConfig;
 import sr.unasat.scheduleweb.entities.BreakTime;
 import sr.unasat.scheduleweb.entities.Department;
-import sr.unasat.scheduleweb.entities.Employees;
 import sr.unasat.scheduleweb.entities.Menu;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BreakTimeDAO {
     private EntityManager entityManager = JPAConfig.getEntityManager();
@@ -36,14 +31,14 @@ public class BreakTimeDAO {
         entityManager.getTransaction().commit();
         return breakTimeList;
     }
-    public List<BreakTime> findServingDateByYear(LocalDate serving_date) {
-        entityManager.getTransaction().begin();
-        String jpql = "select b from BreakTime b where b.serving_date = :serving_date and YEAR(b.serving_date) =:year";
-        TypedQuery<BreakTime> query = entityManager.createQuery(jpql, BreakTime.class);
-        List<BreakTime> breakTimeList = query.setParameter("serving_date", serving_date).setParameter("year", serving_date.getYear()).getResultList();
-        entityManager.getTransaction().commit();
-        return breakTimeList;
-    }
+//    public List<BreakTime> findServingDateByYear(LocalDate serving_date) {
+//        entityManager.getTransaction().begin();
+//        String jpql = "select b from BreakTime b where b.serving_date = :serving_date and YEAR(b.serving_date) =:year";
+//        TypedQuery<BreakTime> query = entityManager.createQuery(jpql, BreakTime.class);
+//        List<BreakTime> breakTimeList = query.setParameter("serving_date", serving_date).setParameter("year", serving_date.getYear()).getResultList();
+//        entityManager.getTransaction().commit();
+//        return breakTimeList;
+//    }
     public List<BreakTime> findDateByYear(LocalDate serving_date) {
         entityManager.getTransaction().begin();
         String jpql = "select b from BreakTime b join Menu m on b.menu.id = m.id where QUARTER(b.serving_date) in (1,2,3,4) and m.description =: description";

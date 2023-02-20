@@ -25,17 +25,7 @@ public class MenuController {
     @Produces(MediaType.APPLICATION_JSON)
     public void add(Menu menu){
         menuService.insertMenu(menu);
-//        System.out.println(menu);
     }
-//
-//    @Path("/update")
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public void update(Menu menu){
-//        menuService.updateMenu(menu);
-//    }
-//
     @Path("/remove")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
@@ -51,15 +41,6 @@ public class MenuController {
     public Menu getMenu(int menuId){
         return menuService.updateMenu(menuId);
     }
-
-//    @Path("/updateMenu")
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Menu getMenu(Menu menu){
-//        return menuService.updateMenu(menu);
-//
-//    }
 
 
 }

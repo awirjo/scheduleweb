@@ -1,45 +1,85 @@
-function loadQuarterReport() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            let orderDataList = JSON.parse(this.responseText);
-            document.getElementById("reportsId").innerHTML =
-                this.responseText;
-            //
-            // console.log(orderDataList);
+// getQuarterReport function
+function getQuarterReport() {
+    $.ajax({
+        url: "http://localhost:8081/scheduleweb_war_exploded/api/reports/quarter",
+        type: "GET",
+        success: function(response) {
+            response.sort(function(a, b) {
+                return new Date(a.serving_date) - new Date(b.serving_date);
+            });
+            var reportData = document.getElementById('report-data');
+            reportData.innerHTML = '';
+            var ul = document.createElement('ul');
+            response.forEach(function(item) {
+                var li = document.createElement('li');
+                li.innerHTML = 'ID: ' + item.id + ', Serving Time: ' + item.serving_time + ', Serving Date: ' + item.serving_date;
+                ul.appendChild(li);
+            });
+            reportData.appendChild(ul);
+        },
+        error: function(xhr, status, error) {
+            console.log("Error: " + error); // handle error
         }
-    };
-    xhttp.open("GET", "http://localhost:8081/scheduleweb_war_exploded/api/reports/quarter", true);
-    xhttp.send();
+    });
 }
 
-function loadHalfYearReport() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            let orderDataList = JSON.parse(this.responseText);
-            document.getElementById("reportsId").innerHTML =
-                this.responseText;
-            //
-            // console.log(orderDataList);
+// getHalfYearReport function
+function getHalfYearReport() {
+    $.ajax({
+        url: "http://localhost:8081/scheduleweb_war_exploded/api/reports/halfYear",
+        type: "GET",
+        success: function(response) {
+            response.sort(function(a, b) {
+                return new Date(a.serving_date) - new Date(b.serving_date);
+            });
+            var reportData = document.getElementById('report-data');
+            reportData.innerHTML = '';
+            var ul = document.createElement('ul');
+            response.forEach(function(item) {
+                var li = document.createElement('li');
+                li.innerHTML = 'ID: ' + item.id + ', Serving Time: ' + item.serving_time + ', Serving Date: ' + item.serving_date;
+                ul.appendChild(li);
+            });
+            reportData.appendChild(ul);
+        },
+        error: function(xhr, status, error) {
+            console.log("Error: " + error); // handle error
         }
-    };
-    xhttp.open("GET", "http://localhost:8081/scheduleweb_war_exploded/api/reports/halfYear", true);
-    xhttp.send();
+    });
 }
 
-function loadYearReport() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            let orderDataList = JSON.parse(this.responseText);
-            document.getElementById("reportsId").innerHTML =
-                this.responseText;
-            //
-            // console.log(orderDataList);
+// getYearReport function
+function getYearReport() {
+    $.ajax({
+        url: "http://localhost:8081/scheduleweb_war_exploded/api/reports/year",
+        type: "GET",
+        success: function(response) {
+            response.sort(function(a, b) {
+                return new Date(a.serving_date) - new Date(b.serving_date);
+            });
+            var reportData = document.getElementById('report-data');
+            reportData.innerHTML = '';
+            var ul = document.createElement('ul');
+            response.forEach(function(item) {
+                var li = document.createElement('li');
+                li.innerHTML = 'ID: ' + item.id + ', Serving Time: ' + item.serving_time + ', Serving Date: ' + item.serving_date;
+                ul.appendChild(li);
+            });
+            reportData.appendChild(ul);
+        },
+        error: function(xhr, status, error) {
+            console.log("Error: " + error); // handle error
         }
-    };
-    xhttp.open("GET", "http://localhost:8081/scheduleweb_war_exploded/api/reports/year", true);
-    xhttp.send();
+    });
 }
 
+$(document).ready(function() {
+    // Attach a click event to the button with ID quarter-btn
+    $("#quarter-btn").click(getQuarterReport);
+
+    // Attach a click event to the button with ID halfYear-btn
+    $("#halfYear-btn").click(getHalfYearReport);
+
+    // Attach a click event to the button with ID year-btn
+    $("#year-btn").click(getYearReport);
+});

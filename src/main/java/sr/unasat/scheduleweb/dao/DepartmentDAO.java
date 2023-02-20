@@ -1,18 +1,11 @@
 package sr.unasat.scheduleweb.dao;
 
-import sr.unasat.scheduleweb.configuration.JPAConfig;
 import sr.unasat.scheduleweb.entities.Department;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static sr.unasat.scheduleweb.configuration.JPAConfig.getEntityManager;
 
