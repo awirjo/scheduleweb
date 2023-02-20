@@ -20,7 +20,7 @@ function loadMenuList() {
                     ' class="w3-bar-item w3-button w3-small w3-right">Remove</button> ' +
 
 
-                    ' <img src="images/icons8-reading-48.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px"> ' +
+                    ' <img src="pics/menu.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px"> ' +
                     ' <div class="w3-bar-item"> ' +
                     ' <span> Breakfast: ' +  menuDataList[index].breakfast  + ' </span><br> ' +
                     ' <span> Lunch: ' +  menuDataList[index].lunch  + ' </span> <br>' +
@@ -52,6 +52,7 @@ function addMenu(){
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify(menu));
 }
+
 function updateBook()
 {
     let menu = {
@@ -119,7 +120,7 @@ function saveMenu()
 {
     if(validateForm())
     {
-        if(document.getElementById("btnSaveMenu").innerHTML == 'Add Menu')
+        if(document.getElementById("btnSaveMenu").innerHTML === 'Add Menu')
         {
             addMenu();
         }
@@ -151,4 +152,3 @@ function validateForm()
 
     return pass;
 }
-

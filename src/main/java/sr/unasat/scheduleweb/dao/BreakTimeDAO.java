@@ -18,11 +18,6 @@ public class BreakTimeDAO {
     private EmployeesDAO employeesDAO = new EmployeesDAO();
     private DepartmentDAO departmentDAO = new DepartmentDAO();
 
-
-//    public BreakTimeDAO(EntityManager entityManager) {
-//        this.entityManager = entityManager;
-//    }
-
     public List<BreakTime> findServingDateByHalfYear(LocalDate serving_date) {
         entityManager.getTransaction().begin();
         String jpql = "select b from BreakTime b join Menu m on b.menu.id = m.id where QUARTER(b.serving_date) in (1,2) and m.description =:description";
@@ -168,10 +163,6 @@ public class BreakTimeDAO {
             entityManagerPersistence.close();
         }
     }
-
-
-
-
     public BreakTime insertOneRecord(BreakTime breakTime) {
         Set<Department> departments = new HashSet<>();
         for (Department department : breakTime.getDepartment()) {

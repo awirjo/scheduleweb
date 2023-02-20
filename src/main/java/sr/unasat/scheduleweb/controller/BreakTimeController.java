@@ -13,8 +13,6 @@ import java.util.*;
 public class BreakTimeController {
 
     private BreakTimeService breakTimeService = new BreakTimeService();
-
-
     @PersistenceContext(unitName = "PERSISTENCE")
 
     @Path("breakList")
@@ -24,7 +22,6 @@ public class BreakTimeController {
         System.out.println(breakTimeService.findAllBreakTime());
         return breakTimeService.findAllBreakTime();
     }
-
     @Path("/addBreak")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

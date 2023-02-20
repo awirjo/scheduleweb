@@ -5,6 +5,7 @@ import sr.unasat.scheduleweb.service.MenuService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/menu")
@@ -18,7 +19,6 @@ public class MenuController {
         System.out.println(menuService.findAll());
         return menuService.findAll();
     }
-
     @Path("/add")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -34,12 +34,25 @@ public class MenuController {
         menuService.deleteMenu(menu);
     }
 
+    @Path("/update")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateMenu(Menu updatedMenu) {
+        Menu menu = menuService.updateMenu(updatedMenu);
+        if (menu == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } else {
+            return Response.ok(menu).build();
+        }
+    }
+
     @Path("/getMenu")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Menu getMenu(int menuId){
-        return menuService.updateMenu(menuId);
+        return menuService.updateMenuInfo(menuId);
     }
 
 
