@@ -141,13 +141,6 @@ function saveMenu()
         }
     }
 }
-
-function removeMenu(menuId)
-{
-    if ( confirm("Are you sure you want to delete this menu?") ) {
-        deleteMenu(menuId);
-    }
-}
 function validateForm()
 {
     let pass = true;
